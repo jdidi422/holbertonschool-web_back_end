@@ -13,5 +13,5 @@ export function taskNext() {
 
   return combination;
 }
-Execution example
+Execution example:
 
