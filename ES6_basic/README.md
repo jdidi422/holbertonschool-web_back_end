@@ -1,1 +1,1 @@
-ES6-basic
+ES6: Modern JavaScript Explained
