@@ -12,6 +12,10 @@ export function taskNext() {
   combination += getLast();
 
   return combination;
+
+
+
+
 }
-Execution example
+
 
