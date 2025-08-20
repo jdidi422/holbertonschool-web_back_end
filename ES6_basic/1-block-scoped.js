@@ -8,4 +8,4 @@ export default function taskBlock(trueOrFalse) {
   }
 
   return [task, task2];
-/bin/bash: line 1: q: command not found
+}
