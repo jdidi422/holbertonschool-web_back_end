@@ -6,14 +6,14 @@ export default class StudentsController {
     try {
       const data = await readDatabase(dbFile);
       let output = 'This is the list of our students\n';
-      const fields = Object.keys(data).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
+      const fields = Object.keys(data).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
       for (const field of fields) {
         output += `Number of students in ${field}: ${data[field].length}. List: ${data[field].join(', ')}\n`;
       }
 
       res.status(200).send(output.trim());
-    } catch {
+    } catch (err) {
       res.status(500).send('Cannot load the database');
     }
   }
@@ -21,13 +21,15 @@ export default class StudentsController {
   static async getAllStudentsByMajor(req, res) {
     const dbFile = req.databaseFile;
     const major = req.params.major;
+
     if (!['CS', 'SWE'].includes(major)) {
       return res.status(500).send('Major parameter must be CS or SWE');
     }
+
     try {
       const data = await readDatabase(dbFile);
       res.status(200).send(`List: ${data[major].join(', ')}`);
-    } catch {
+    } catch (err) {
       res.status(500).send('Cannot load the database');
     }
   }
