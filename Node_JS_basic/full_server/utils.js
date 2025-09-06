@@ -1,23 +1,26 @@
-import fs from 'fs';
+const fs = require('fs').promises;
 
-function readDatabase(filePath) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-      if (err) {
-        reject(err);
-        return;
+async function readDatabase(filePath) {
+  try {
+    const data = await fs.readFile(filePath, 'utf-8');
+    const lines = data
+      .trim()
+      .split('\n')
+      .slice(1); // Ignorer la première ligne
+    const result = {};
+
+    for (const line of lines) {
+      const [firstName, , , field] = line.split(','); // Extraire les valeurs des colonnes
+      if (!result[field]) {
+        result[field] = [];
       }
-      const lines = data.trim().split('\n');
-      const students = {};
-      for (let i = 1; i < lines.length; i++) {
-        const row = lines[i].split(',');
-        const field = row[3];
-        if (!students[field]) students[field] = [];
-        students[field].push(row[0]); // first name
-      }
-      resolve(students);
-    });
-  });
+      result[field].push(firstName);
+    }
+
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
-export default readDatabase;
+module.exports = { readDatabase };
