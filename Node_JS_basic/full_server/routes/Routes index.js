@@ -1,3 +1,4 @@
+// full_server/routes/index.js
 import express from 'express';
 import AppController from '../controllers/AppController.js';
 import StudentsController from '../controllers/StudentsController.js';
@@ -9,4 +10,3 @@ router.get('/students', StudentsController.getAllStudents);
 router.get('/students/:major', StudentsController.getAllStudentsByMajor);
 
 export default router;
-
