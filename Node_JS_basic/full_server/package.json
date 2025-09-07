@@ -1,7 +1,7 @@
 {
   "name": "node_js_basic",
   "version": "1.0.0",
-  "description": "My Node.js project",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js database.csv",
