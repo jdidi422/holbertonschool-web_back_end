@@ -3,34 +3,26 @@ import fs from 'fs';
 export function readDatabase(filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) return reject(err);
-
-      const lines = data.trim().split('\n');
-      if (lines.length < 2) return resolve({}); 
-      
-
-      const headers = lines[0].split(',');
-      const fieldIndex = headers.indexOf('field');
-      const firstNameIndex = headers.indexOf('firstname');
-
-      if (fieldIndex === -1 || firstNameIndex === -1) {
-        return reject(new Error('CSV headers missing'));
+      if (err) {
+        reject(new Error('Cannot load the database'));
+        return;
       }
 
-      const result = {};
+      const lines = data.trim().split('\n'); // chaque ligne du CSV
+      const students = {};
 
-      lines.slice(1).forEach(line => {
-        if (!line.trim()) return; 
-        const parts = line.split(',');
-        const field = parts[fieldIndex].trim();
-        const firstname = parts[firstNameIndex].trim();
+      // on saute la première ligne si c'est l'en-tête
+      const header = lines.shift();
 
-        if (!result[field]) result[field] = [];
-        result[field].push(firstname);
-      });
+      for (const line of lines) {
+        const [firstname,, , field] = line.split(','); // prénom = colonne 0, field = colonne 3
+        if (!students[field]) students[field] = [];
+        students[field].push(firstname);
+      }
 
-      resolve(result);
+      resolve(students);
     });
   });
 }
+
 
