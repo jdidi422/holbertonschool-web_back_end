@@ -1,31 +1,22 @@
 {
   "name": "node_js_basics",
   "version": "1.0.0",
-  "description": "Holberton School Node JS Basic server project",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon --exec babel-node --presets @babel/preset-env ./full_server/server.js ./database.csv",
-    "lint": "eslint .",
-    "test": "mocha --require @babel/register --exit"
-  },
-  "author": "",
-  "license": "ISC",
+  "description": "My Node.js project",
+  "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1",
-    "chai-http": "^4.3.0"
+    "csv-parser": "^3.0.0",
+    "debug": "^4.3.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.11",
-    "@babel/core": "^7.22.11",
-    "@babel/node": "^7.22.11",
-    "@babel/preset-env": "^7.22.10",
-    "nodemon": "^2.0.22",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "mocha": "^10.2.0",
-    "chai": "^4.4.1",
-    "sinon": "^15.2.0"
-  }
+    "@babel/core": "^7.22.5",
+    "@babel/node": "^7.22.5",
+    "@babel/preset-env": "^7.28.3",
+    "nodemon": "^3.1.10"
+  },
+  "scripts": {
+    "start": "node ./server.js ./database.csv",
+    "dev": "nodemon --exec babel-node --presets @babel/preset-env ./server.js ./database.csv"
+  },
+  "author": "",
+  "license": "ISC"
 }
