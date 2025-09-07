@@ -3,11 +3,11 @@ import { readDatabase } from '../utils.js';
 class StudentsController {
   static async getAllStudents(req, res) {
     try {
-      const students = await readDatabase(process.argv[2]); // récupérer le nom du fichier
+      const students = await readDatabase(process.argv[2]);
       let responseText = 'This is the list of our students\n';
-
-      // trier les champs par ordre alphabétique
-      const fields = Object.keys(students).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+      const fields = Object.keys(students).sort((a, b) =>
+        a.toLowerCase().localeCompare(b.toLowerCase())
+      );
 
       for (const field of fields) {
         responseText += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
@@ -35,6 +35,8 @@ class StudentsController {
     }
   }
 }
+
+export default StudentsController;
 
 export default StudentsController;
 
