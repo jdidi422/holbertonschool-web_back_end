@@ -1,9 +1,9 @@
 import express from 'express';
-import router from './routes/index.js'; // correspond à export default
+import router from './routes/index.js';
 
 const app = express();
 
-app.use(router); // ✅ ça doit fonctionner maintenant
+app.use(router);
 
 const port = 1245;
 app.listen(port, () => {
