@@ -1,28 +1,37 @@
 import fs from 'fs';
+import csv from 'csv-parser';
 
+/**
+ * readDatabase - Reads a CSV database and organizes student firstnames by field
+ * @param {string} filePath - Path to the CSV file
+ * @returns {Promise<Object>} - Resolves with object of arrays per field
+ */
 export function readDatabase(filePath) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) return reject(err);
+    const studentsByField = {};
+    const results = [];
 
-      const lines = data.trim().split('\n');
-      const result = {};
+    
+    fs.access(filePath, fs.constants.R_OK, (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-      // Assume the CSV first line is headers: firstname,lastname,age,field
-      const headers = lines[0].split(',');
-      const fieldIndex = headers.indexOf('field');
-      const firstNameIndex = headers.indexOf('firstname');
-
-      lines.slice(1).forEach(line => {
-        const parts = line.split(',');
-        const field = parts[fieldIndex].trim();
-        const firstname = parts[firstNameIndex].trim();
-
-        if (!result[field]) result[field] = [];
-        result[field].push(firstname);
-      });
-
-      resolve(result);
+      fs.createReadStream(filePath)
+        .pipe(csv())
+        .on('data', (row) => results.push(row))
+        .on('end', () => {
+          results.forEach((student) => {
+            const field = student.field || 'unknown';
+            if (!studentsByField[field]) {
+              studentsByField[field] = [];
+            }
+            studentsByField[field].push(student.firstname);
+          });
+          resolve(studentsByField);
+        })
+        .on('error', (error) => reject(error));
     });
   });
 }
