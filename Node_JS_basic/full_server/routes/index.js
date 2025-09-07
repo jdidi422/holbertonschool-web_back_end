@@ -1,5 +1,5 @@
-// full_server/routes/index.js
 import express from 'express';
+
 import AppController from '../controllers/AppController.js';
 
 const router = express.Router();
