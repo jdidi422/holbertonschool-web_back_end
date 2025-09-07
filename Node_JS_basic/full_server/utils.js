@@ -1,4 +1,4 @@
-onst fs = require('fs');
+const fs = require('fs');
 
 function readDatabase(path) {
   return new Promise((resolve, reject) => {
