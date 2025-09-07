@@ -6,14 +6,21 @@ export function readDatabase(filePath) {
       if (err) return reject(err);
 
       const lines = data.trim().split('\n');
-      const result = {};
+      if (lines.length < 2) return resolve({}); 
+      
 
-      // Assume the CSV first line is headers: firstname,lastname,age,field
       const headers = lines[0].split(',');
       const fieldIndex = headers.indexOf('field');
       const firstNameIndex = headers.indexOf('firstname');
 
+      if (fieldIndex === -1 || firstNameIndex === -1) {
+        return reject(new Error('CSV headers missing'));
+      }
+
+      const result = {};
+
       lines.slice(1).forEach(line => {
+        if (!line.trim()) return; 
         const parts = line.split(',');
         const field = parts[fieldIndex].trim();
         const firstname = parts[firstNameIndex].trim();
