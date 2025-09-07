@@ -1,28 +1,33 @@
-import fs from 'fs';
+const fs = require('fs');
 
-export function readDatabase(filePath) {
+function readDatabase(path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
         reject(new Error('Cannot load the database'));
         return;
       }
 
-      const lines = data.trim().split('\n'); // chaque ligne du CSV
-      const students = {};
+      const lines = data.trim().split('\n');
+      lines.shift();
 
-      // on saute la première ligne si c'est l'en-tête
-      const header = lines.shift();
+      const result = {};
 
       for (const line of lines) {
-        const [firstname,, , field] = line.split(','); // prénom = colonne 0, field = colonne 3
-        if (!students[field]) students[field] = [];
-        students[field].push(firstname);
+        if (line.trim() !== '') {
+          const [firstname, , , field] = line.split(',');
+
+          if (!result[field]) {
+            result[field] = [];
+          }
+
+          result[field].push(firstname);
+        }
       }
 
-      resolve(students);
+      resolve(result);
     });
   });
 }
 
-
+module.exports = readDatabase;
