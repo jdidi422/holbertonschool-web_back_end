@@ -1,0 +1,31 @@
+{
+  "name": "node_js_basics",
+  "version": "1.0.0",
+  "description": "Holberton School Node JS Basic server project",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node --presets @babel/preset-env ./full_server/server.js ./database.csv",
+    "lint": "eslint .",
+    "test": "mocha --require @babel/register --exit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "chai-http": "^4.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.11",
+    "@babel/core": "^7.22.11",
+    "@babel/node": "^7.22.11",
+    "@babel/preset-env": "^7.22.10",
+    "nodemon": "^2.0.22",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "mocha": "^10.2.0",
+    "chai": "^4.4.1",
+    "sinon": "^15.2.0"
+  }
+}
