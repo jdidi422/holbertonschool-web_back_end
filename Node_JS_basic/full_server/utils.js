@@ -1,36 +1,28 @@
-// full_server/utils.js
 import fs from 'fs';
+
 import path from 'path';
+
 
 export function readDatabase(filePath) {
   return new Promise((resolve, reject) => {
-    // نتحققو من وجود الملف
-    fs.readFile(path.resolve(filePath), 'utf-8', (err, data) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
         reject(err);
-        return;
-      }
+      } else {
+        const lines = data.trim().split('\n');
+        const headers = lines.shift().split(',');
+        const result = {};
 
-      const lines = data.trim().split('\n');
-      const result = {};
-      const headers = lines[0].split(',');
-
-      // نمروا على كل سطر ما عدا الرأس
-      for (let i = 1; i < lines.length; i++) {
-        const row = lines[i].split(',');
-        const student = {};
-        headers.forEach((header, idx) => {
-          student[header] = row[idx];
+        lines.forEach((line) => {
+          const values = line.split(',');
+          const firstName = values[0];
+          const major = values[3];
+          if (!result[major]) result[major] = [];
+          result[major].push(firstName);
         });
 
-        const field = student.field;
-        if (!result[field]) {
-          result[field] = [];
-        }
-        result[field].push(student.firstname);
+        resolve(result);
       }
-
-      resolve(result);
     });
   });
 }
