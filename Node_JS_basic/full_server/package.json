@@ -1,0 +1,5 @@
+
+"scripts": {
+  "dev": "nodemon --exec babel-node --presets @babel/preset-env ./server.js"
+}
+
