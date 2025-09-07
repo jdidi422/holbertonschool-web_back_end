@@ -38,5 +38,4 @@ class StudentsController {
 
 export default StudentsController;
 
-export default StudentsController;
 
